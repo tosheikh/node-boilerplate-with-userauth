@@ -1,27 +1,3 @@
-// var sequelize = require('sequelize');
-
-// var User = sequelize.define('user', {
-//   firstName: {
-//     type: Sequelize.STRING
-//   },
-//   lastName: {
-//     type: Sequelize.STRING
-//   }
-// });
-
-// // force: true will drop the table if it already exists
-// // User.sync({force: true}).then(function () {
-// //   // Table created
-// //   return User.create({
-// //     firstName: 'John',
-// //     lastName: 'Hancock'
-// //   });
-// // });
-
-// module.exports = {
-//   User:User
-// }
-
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
@@ -35,7 +11,12 @@ User.sync({force: true}).then(function () {
   // Table created
   return User.create({
     username: 'johnhancock',
-    email: 'johnhancock@gmail.com'
+    email: 'johnhancock@gmail.com',
+    password: "test123"
+  }, {
+    username: 'danishmir',
+    email: 'djmir@gmail.com',
+    password: "test123"
   });
 });
 

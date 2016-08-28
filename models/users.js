@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     lastName:DataTypes.STRING,
     password:DataTypes.STRING,
     phone:DataTypes.STRING,
-    createdAt:DataTypes.Date,
+    createdAt:DataTypes.DATE,
     updatedAt:DataTypes.DATE,
     verified:DataTypes.BOOLEAN
   });

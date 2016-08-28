@@ -9,14 +9,17 @@ var exphbs  = require('express-handlebars');
 var routes = require('./routes/index');
 var users = require('./routes/user');
 var Sequelize = require('sequelize');
-var app = express();
-
 var env = process.env.NODE_ENV || 'development';
+
+var config    = require(path.join(__dirname, 'config', 'config.json'))[env];
+
+var app = express();
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
 
-var sequelize = new Sequelize('batwa', 'root', 'root', {
+//DB Initialization
+var sequelize = new Sequelize(config.database, config.username, config.password, {
 
   host: '127.0.0.1',
   dialect: 'mysql',
@@ -30,6 +33,8 @@ var sequelize = new Sequelize('batwa', 'root', 'root', {
 });
 
 
+
+//confirm DB connection
 sequelize
   .authenticate()
   .then(function(err) {

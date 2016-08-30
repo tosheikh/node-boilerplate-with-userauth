@@ -8,6 +8,7 @@ var exphbs  = require('express-handlebars');
 
 var Sequelize = require('sequelize');
 var jwt = require('jsonwebtoken');
+var expressJwt = require('express-jwt');
 var configjs = require('./config/config.js');
 var env = process.env.NODE_ENV || 'development';
 var router = express.Router();
@@ -22,6 +23,39 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 //import controllers
 var user = require('./controllers/user.js');
 var index = require('./controllers/index.js');
+var authenticateCtrl = require('./controllers/authenticate.js');
+var secret = configjs.secret;
+
+// view engine setup
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  partialsDir: ['views/partials/']
+}));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'handlebars');
+
+// app.use(favicon(__dirname + '/public/img/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api', router);
+app.get('/', index.hello);
+router.use('/', expressJwt({secret: secret}).unless({path: ['/api/authenticate']}));
+
+// middlewear for token
+// router.use('/', authenticateCtrl.authenticateJWTToken);
+
+
+//=============== ROUTES ===================//
+
+// all routes are at http://localhost:3000/api/....
+router.get('/', authenticateCtrl.dontFuckWithMe);
+router.post('/authenticate', authenticateCtrl.authenticateUser);
+router.get('/users', user.getAllUsers);
+
 
 
 //DB Initialization
@@ -49,30 +83,6 @@ sequelize
   .catch(function (err) {
     console.log('Unable to connect to the database:', err);
   });
-
-
-// view engine setup
-
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main',
-  partialsDir: ['views/partials/']
-}));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
-
-// app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-//=============== ROUTES ===================//
-app.get('/', index.hello);
-
-app.get('/users', user.getAllUsers);
-app.post('/users/authenticate', user.authenticateUser);
 
 
 /// catch 404 and forward to error handler

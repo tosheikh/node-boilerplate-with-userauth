@@ -6,16 +6,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs  = require('express-handlebars');
 
-var routes = require('./routes/index');
-var users = require('./routes/user');
 var Sequelize = require('sequelize');
+var jwt = require('jsonwebtoken');
+var configjs = require('./config/config.js');
 var env = process.env.NODE_ENV || 'development';
+var router = express.Router();
 
-var config    = require(path.join(__dirname, 'config', 'config.json'))[env];
+var config = require(path.join(__dirname, 'config', 'config.json'))[env];
 
 var app = express();
+app.set('superSecret', configjs.secret);
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
+
+//import controllers
+var user = require('./controllers/user.js');
+
 
 
 //DB Initialization
@@ -63,8 +69,14 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+
+//=============== ROUTES ===================//
+
+app.get('/', function(req, res) {
+  res.render('index', { title: 'Express' });
+});
+
+app.use('/users', user.getAllUsers);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

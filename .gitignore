@@ -1,3 +1,5 @@
 node_modules/
 public/components
-.sass-cache
+.sass-cach
+batwa.sublime-workspace
+npm-debug.log

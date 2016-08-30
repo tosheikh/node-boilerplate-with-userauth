@@ -1,5 +1,5 @@
 var models  = require('../models');
-
+var md5 = require('md5');
 /* GET users listing. */
 
 exports.getAllUsers = function(req, res)
@@ -15,7 +15,7 @@ exports.authenticateUser = function(req, res)
 {
 	console.log(req.body);
 	models.User.findOne({
-		where: {email: req.body.email, password: req.body.password}
+		where: {email: req.body.email, password: md5(req.body.password)}
 	})
 	.then(function(user)
 	{

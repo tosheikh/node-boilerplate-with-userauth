@@ -2,18 +2,30 @@ var models  = require('../models');
 
 /* GET users listing. */
 
-exports.getAllUsers = function(req, res){
-	models.User.findAll().then(function(users) {
+exports.getAllUsers = function(req, res)
+{
+	models.User.findAll().then(function(users)
+	{
 		res.send(users);
 	});
 }
 
 
-exports.authenticateUser = function(req, res){
+exports.authenticateUser = function(req, res)
+{
+	console.log(req.body);
 	models.User.findOne({
-		where: {username: 'tjsheikh'}
-	}).then(function(user) {
-  		console.log(user);
-  		res.send(user);
-  	});
+		where: {email: req.body.email, password: req.body.password}
+	})
+	.then(function(user)
+	{
+		if (user == null){
+			console.log('invalid username or password');
+			res.send("Invalid username or password");
+		}
+		else{
+			console.log(user.dataValues);
+			res.send(user);		
+		}
+	});
 }

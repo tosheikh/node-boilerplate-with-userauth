@@ -63,19 +63,16 @@ app.set('view engine', 'handlebars');
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 //=============== ROUTES ===================//
-
 app.get('/', index.hello);
 
 app.get('/users', user.getAllUsers);
-app.get('/users/authenticate', user.authenticateUser);
+app.post('/users/authenticate', user.authenticateUser);
 
 
 /// catch 404 and forward to error handler

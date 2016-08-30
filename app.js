@@ -21,7 +21,7 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 
 //import controllers
 var user = require('./controllers/user.js');
-
+var index = require('./controllers/index.js');
 
 
 //DB Initialization
@@ -72,11 +72,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //=============== ROUTES ===================//
 
-app.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
+app.get('/', index.hello);
 
-app.use('/users', user.getAllUsers);
+app.get('/users', user.getAllUsers);
+app.get('/users/authenticate', user.authenticateUser);
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

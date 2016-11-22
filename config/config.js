@@ -1,5 +1,6 @@
 module.exports = {
 
-    'secret': 'bforbatwa',
+	//enter secret here
+    'secret': 'yoursecret',
 
 };

@@ -46,7 +46,6 @@ app.get('/', index.hello);
 router.use('/', expressJwt({secret: secret}).unless({path: ['/api/authenticate']}));
 
 // middlewear for token
-// router.use('/', authenticateCtrl.authenticateJWTToken);
 
 
 //=============== ROUTES ===================//

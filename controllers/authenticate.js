@@ -56,7 +56,6 @@ exports.authenticateJWTToken = function(req, res){
 				if(user != null)
 				{
 					req.user = user;
-					console.log('THIS IS WORKING');
 					next();
 				}
 			});

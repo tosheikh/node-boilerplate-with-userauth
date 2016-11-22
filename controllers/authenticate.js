@@ -1,7 +1,9 @@
 var models  = require('../models');
 var md5 = require('md5');
 var jwt = require("jsonwebtoken");
-var configjs = require('../config/config.js');
+var env = process.env.NODE_ENV || 'development';
+var config = require('../config/config.json')[env];
+
 
 exports.authenticateUser = function(req, res)
 {
@@ -22,7 +24,7 @@ exports.authenticateUser = function(req, res)
 				id:user.dataValues.id,
 				username:user.dataValues.username
 			}
-			var token = jwt.sign(tokenLoad, configjs.secret);
+			var token = jwt.sign(tokenLoad, config.secret);
 			var payload = {
 				success:true,
 				message:"User authenticated",
@@ -49,7 +51,7 @@ exports.authenticateJWTToken = function(req, res){
 	{
 		try
 		{
-			var decoded = jwt.decode(token, configjs.secret);
+			var decoded = jwt.decode(token, config.secret);
 			models.User.findOne({where:{id: decoded.id}})
 			.then(function(user)
 			{

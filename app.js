@@ -9,14 +9,13 @@ var exphbs  = require('express-handlebars');
 var Sequelize = require('sequelize');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
-var configjs = require('./config/config.js');
 var env = process.env.NODE_ENV || 'development';
 var router = express.Router();
 
 var config = require(path.join(__dirname, 'config', 'config.json'))[env];
 
 var app = express();
-app.set('superSecret', configjs.secret);
+app.set('superSecret', config.secret);
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
@@ -24,7 +23,7 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 var user = require('./controllers/user.js');
 var index = require('./controllers/index.js');
 var authenticateCtrl = require('./controllers/authenticate.js');
-var secret = configjs.secret;
+var secret = config.secret;
 
 // view engine setup
 app.engine('handlebars', exphbs({
@@ -45,7 +44,7 @@ app.use('/api', router);
 app.get('/', index.hello);
 router.use('/', expressJwt({secret: secret}).unless({path: ['/api/authenticate']}));
 
-// middlewear for token
+// middleware for token
 
 
 //=============== ROUTES ===================//

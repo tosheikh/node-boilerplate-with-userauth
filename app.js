@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', router);
 app.get('/', index.hello);
-router.use('/', expressJwt({secret: secret}).unless({path: ['/api/authenticate']}));
+router.use('/', expressJwt({secret: secret}).unless({path: ['/api/authenticate', '/api/authenticate/']}));
 
 // middleware for token
 

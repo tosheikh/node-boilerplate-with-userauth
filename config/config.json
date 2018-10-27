@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "batwa",
+    "database": "unicorn",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "secret": "yoursecret"

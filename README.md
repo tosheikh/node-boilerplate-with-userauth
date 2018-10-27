@@ -2,6 +2,8 @@
 Node + express + sequelize boilerplate with user authentication using jwtauth. 
 
 To run the app, follow the following steps.
+
+Install node modules by running
 ```npm install```
 
 To run initial migrations to set up user table, run 

@@ -12,6 +12,7 @@ var expressJwt = require('express-jwt');
 var env = process.env.NODE_ENV || 'development';
 var router = express.Router();
 
+// var vcap_service = require('./config/vcap_service.js');
 var config = require(path.join(__dirname, 'config', 'config.json'))[env];
 
 var app = express();
@@ -57,30 +58,30 @@ router.get('/users', user.getAllUsers);
 
 
 //DB Initialization
-var sequelize = new Sequelize(config.database, config.username, config.password, {
+// var sequelize = new Sequelize(config.database, config.username, config.password, {
 
-  host: '127.0.0.1',
-  dialect: 'mysql',
+//   host: '127.0.0.1',
+//   dialect: 'mysql',
 
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
+//   pool: {
+//     max: 5,
+//     min: 0,
+//     idle: 10000
+//   },
 
-});
+// });
 
 
 
 //confirm DB connection
-sequelize
-  .authenticate()
-  .then(function(err) {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(function (err) {
-    console.log('Unable to connect to the database:', err);
-  });
+// sequelize
+//   .authenticate()
+//   .then(function(err) {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .catch(function (err) {
+//     console.log('Unable to connect to the database:', err);
+//   });
 
 
 /// catch 404 and forward to error handler

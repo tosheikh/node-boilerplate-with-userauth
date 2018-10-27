@@ -17,7 +17,8 @@
     "mysql": "^2.11.1",
     "sequelize": "^3.24.1",
     "sequelize-cli": "^2.4.0",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "nodemon": "^1.18.5"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
@@ -25,7 +26,6 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-develop": "^0.4.0",
     "load-grunt-tasks": "^3.2.0",
-    "nodemon": "^1.10.2",
     "request": "^2.60.0",
     "time-grunt": "^1.2.1"
   }

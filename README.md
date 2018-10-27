@@ -18,7 +18,7 @@ To run the app, follow the following steps.
 5. To start the api, run 
 ```npm start```
 
-and navigate to http://127.0.0.1:3000. You should see a page with "Kaisa Hay Cheetay" title.
+and navigate to http://127.0.0.1:3000. You should see a page with "Hi There!" title and db it is connected to.
 
 ## Routes
 To access auth routes, try GET ```http://127.0.0.1:3000/api``` to see an auth error.

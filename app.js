@@ -1,4 +1,8 @@
 var express = require('express');
+var cf_app = require( './config/vcap_application');
+var cf_svc = require( './config/vcap_services');
+
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -12,8 +16,7 @@ var expressJwt = require('express-jwt');
 var env = process.env.NODE_ENV || 'development';
 var router = express.Router();
 
-// var vcap_service = require('./config/vcap_service.js');
-var config = require(path.join(__dirname, 'config', 'config.json'))[env];
+var config = require(path.join(__dirname, 'config', 'config.js'))[env];
 
 var app = express();
 app.set('superSecret', config.secret);
@@ -51,37 +54,36 @@ router.use('/', expressJwt({secret: secret}).unless({path: ['/api/authenticate',
 //=============== ROUTES ===================//
 
 // all routes are at http://localhost:3000/api/....
-router.get('/', authenticateCtrl.dontFuckWithMe);
 router.post('/authenticate', authenticateCtrl.authenticateUser);
 router.get('/users', user.getAllUsers);
 
 
 
-//DB Initialization
-// var sequelize = new Sequelize(config.database, config.username, config.password, {
+// DB Initialization // db, username, password
+var sequelize = new Sequelize(config.database, config.username, config.password, {
 
-//   host: '127.0.0.1',
-//   dialect: 'mysql',
+  host: config.host,
+  dialect: 'mysql',
 
-//   pool: {
-//     max: 5,
-//     min: 0,
-//     idle: 10000
-//   },
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
 
-// });
+});
 
 
 
-//confirm DB connection
-// sequelize
-//   .authenticate()
-//   .then(function(err) {
-//     console.log('Connection has been established successfully.');
-//   })
-//   .catch(function (err) {
-//     console.log('Unable to connect to the database:', err);
-//   });
+// confirm DB connection
+sequelize
+  .authenticate()
+  .then(function(err) {
+    console.log('Connection has been established successfully with db at ' + config.host);
+  })
+  .catch(function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
 
 
 /// catch 404 and forward to error handler
@@ -119,4 +121,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+// module.exports = app;
+
+app.listen( process.env.PORT || 3000)

@@ -2,7 +2,7 @@ var models  = require('../models');
 var md5 = require('md5');
 var jwt = require("jsonwebtoken");
 var env = process.env.NODE_ENV || 'development';
-var config = require('../config/config.json')[env];
+var config = require('../config/config.js')[env];
 
 
 exports.authenticateUser = function(req, res)
@@ -71,8 +71,4 @@ exports.authenticateJWTToken = function(req, res){
 	{
 		next();
 	}
-}
-
-exports.dontFuckWithMe = function(req, res){
-	res.send("Don't fuck with me");
 }
